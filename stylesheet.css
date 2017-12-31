@@ -1,0 +1,26 @@
+body {
+    background-color: rgb(132, 194, 212);
+    
+    
+}
+.nav-container{
+    margin-top:15px;
+}
+.nav{
+    width: 50%;
+    margin: auto;
+    background-color: white;
+    opacity: 50%;
+}
+.nav a{  
+    margin: 0px 10px 0px 10px;
+}
+.container{
+    width: 50%;
+    margin: auto;
+}
+.tweet-message{
+    margin-top:25px;
+   
+    width: 25pc;
+}

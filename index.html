@@ -5,16 +5,25 @@
     <script src="jquery.js"></script>
     <script src="data_generator.js"></script>
     <script src="application.js"></script>
+    <link rel="stylesheet" type="text/css" href="stylesheet.css">
   </head>
   <body>
-    <div id='new-tweet'>
-      <h1>What's happening?</h1>
-      <input class='tweet-message' type="text" />
+    <div class="nav-container">
+        <ul class="nav">
+            <a>home</a>
+            <a>moments</a>
+            <a>notifications</a>
+            <a>messages</a>
+          </ul>
+    </div>
+    <div class="container">
+    <div  id='new-tweet'>
+      <input placeholder="what's happening?"class='tweet-message' type="text" />
       <button>Tweet</button>
     </div>
-    <div id='tweets'>
+    <div class="feed" id='tweets'>
 
     </div>
-    
+  </div>
   </body>
 </html>
