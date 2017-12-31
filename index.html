@@ -7,23 +7,14 @@
     <script src="application.js"></script>
   </head>
   <body>
-    <script>
+    <div id='new-tweet'>
+      <h1>What's happening?</h1>
+      <input class='tweet-message' type="text" />
+      <button>Tweet</button>
+    </div>
+    <div id='tweets'>
 
-      $(document).ready(function(){
-        var $body = $('body');
-        $body.html('');
-
-        var index = streams.home.length - 1;
-        while(index >= 0){
-          var tweet = streams.home[index];
-          var $tweet = $('<div></div>');
-          $tweet.text('@' + tweet.user + ': ' + tweet.message);
-          $tweet.appendTo($body);
-          index -= 1;
-        }
-
-      });
-
-    </script>
+    </div>
+    
   </body>
 </html>
