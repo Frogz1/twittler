@@ -1,7 +1,7 @@
 $(document).ready(function(){
     function getDate() {
         var d = new Date();
-        //return d.getFullYear();
+        
 
         var month = d.getMonth() + 1;
         var day = d.getDate();
