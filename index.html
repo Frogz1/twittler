@@ -8,22 +8,46 @@
     <link rel="stylesheet" type="text/css" href="stylesheet.css">
   </head>
   <body>
-    <div class="nav-container">
-        <ul class="nav">
-            <a>home</a>
-            <a>moments</a>
-            <a>notifications</a>
-            <a>messages</a>
-          </ul>
+    <div>
+      <button id="new-tweet">See Tweets</button>
     </div>
-    <div class="container">
-    <div  id='new-tweet'>
-      <input placeholder="what's happening?"class='tweet-message' type="text" />
-      <button>Tweet</button>
-    </div>
-    <div class="feed" id='tweets'>
+    <script>
+      $(document).ready(function(){
+        function getDate() {
+    var d = new Date();
+    var month = d.getMonth() + 1;
+    var day = d.getDate();
+    var time = d.getHours() + ':' + d.getMinutes() + ':' + (d.getSeconds() < 10 ? '0' + d.getSeconds() : d.getSeconds());
+    var output = ' ' + d.getFullYear() + '/' +
+        (month < 10 ? '0' : '') + month + '/' +
+        (day < 10 ? '0' : '') + day + ' ' + time;
+    return output;
+}
+        var $body = $('body');
+       $("#new-tweet").on('click', function(){
+        var index = streams.home.length - 1;
+        while(index >= 0){
+          var tweet = streams.home[index];
+          var $tweet = $('<div></div>');
+          $tweet.attr('user',tweet.user);
+          
+          $tweet.html('@' + '<a href="#">'+tweet.user +'</a>'+ ': ' + tweet.message + ' ' + getDate());
+          $tweet.appendTo($body);
+          index -= 1;
+          
+        }
+        $('a').on('click',  function(){
+            var user = $(this).closest('div').attr('user');
+            for (var i = 0; i < streams.users[user].length; i++){
+              $body.append('<div>' + streams.users[user][i].message + '</div>')
+            }
+            
+            console.log(streams.users[user][0].message);
+          })
+       })
+      
 
-    </div>
-  </div>
-  </body>
+
+      });
+    </script>
 </html>
