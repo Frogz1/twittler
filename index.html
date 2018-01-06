@@ -1,53 +1,123 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <script src="jquery.js"></script>
-    <script src="data_generator.js"></script>
-    <script src="application.js"></script>
-    <link rel="stylesheet" type="text/css" href="stylesheet.css">
-  </head>
-  <body>
-    <div>
+
+<head>
+  <meta charset="utf-8">
+  <script src="jquery.js"></script>
+  <script src="data_generator.js"></script>
+  <script src="application.js"></script>
+  <link rel="stylesheet" type="text/css" href="stylesheet.css">
+</head>
+
+<body>
+  <!-- <div>
       <button id="new-tweet">See Tweets</button>
-    </div>
-    <script>
-      $(document).ready(function(){
-        function getDate() {
-    var d = new Date();
-    var month = d.getMonth() + 1;
-    var day = d.getDate();
-    var time = d.getHours() + ':' + d.getMinutes() + ':' + (d.getSeconds() < 10 ? '0' + d.getSeconds() : d.getSeconds());
-    var output = ' ' + d.getFullYear() + '/' +
-        (month < 10 ? '0' : '') + month + '/' +
-        (day < 10 ? '0' : '') + day + ' ' + time;
-    return output;
-}
-        var $body = $('body');
-       $("#new-tweet").on('click', function(){
-        var index = streams.home.length - 1;
-        while(index >= 0){
-          var tweet = streams.home[index];
-          var $tweet = $('<div></div>');
-          $tweet.attr('user',tweet.user);
+    </div> -->
+  <div class='nav'>
+    <ul>
+      <a id="home">Home</a>
+      <a>New Tweet</a>
+    </ul>
+  </div>
+  <div class='new-tweets'>
+    <button></button>
+  </div>
+  <div class="tweet-stream"></div>
+  <script>
+    $(document).ready(function () {
+      
+      // function updateTweets() {
+      //   var $body = $('body.tweet-stream');
+      //   var index = streams.home.length - 1;
+      //   $(".new-tweets").find('button').text(($('div#tweet.hidden').length) + ' new tweets');
+      //   while (index >= 0) {
+      //     var tweet = streams.home[index];
+      //     // tweet = tweet.sort(function(a, b) {
+      //     //     return Date.parse(b.created_at) > Date.parse(a.created_at);
+      //     // });
           
-          $tweet.html('@' + '<a href="#">'+tweet.user +'</a>'+ ': ' + tweet.message + ' ' + getDate());
+
+
+      //     var $tweet = $("<div id='tweet'></div>");
+          
+      //       $tweet.attr('data-user', tweet.user);
+
+      //       $tweet.html('@' + "<a class='user' href='#'>" + tweet.user + '</a>' + ': ' + tweet.message + ' ' +tweet.created_at);
+      //       $tweet.appendTo($('body')); 
+          
+      //     index -= 1;
+      //   };
+      // };
+
+      function getDate(date) {
+        var d = new Date(date);
+
+
+        var month = d.getMonth() + 1;
+        var day = d.getDate();
+        var time = d.getHours() + ':' + (d.getMinutes() < 10 ? '0' + d.getMinutes() : d.getMinutes()) + ':' + (d.getSeconds() < 10 ? '0' + d.getSeconds() : d.getSeconds());
+
+        var output = ' ' + d.getFullYear() + '/' +
+          (month < 10 ? '0' : '') + month + '/' +
+          (day < 10 ? '0' : '') + day + ' ' + time;
+        return output;
+      }
+
+      function updateHrTweets() {
+        var $body = $('.tweet-stream');
+        $body.html('');
+        var index = streams.home.length - 1;
+        
+        while (index >= 0) {
+          var tweet = streams.home[index];
+          var $tweet = $("<div class='tweet'></div>");
+          var utc = Date.parse(tweet.created_at);
+          var date = getDate(new Date(tweet.created_at));          
+          $tweet.attr('id', tweet.user);
+          $tweet.html('@' + "<a  class='user'>" + tweet.user + '</a>' + ': ' + tweet.message + date);
           $tweet.appendTo($body);
           index -= 1;
-          
         }
-        $('a').on('click',  function(){
-            var user = $(this).closest('div').attr('user');
-            for (var i = 0; i < streams.users[user].length; i++){
-              $body.append('<div>' + streams.users[user][i].message + '</div>')
-            }
-            
-            console.log(streams.users[user][0].message);
-          })
-       })
+      };
+      $("#home").on('click', function(){
+        updateHrTweets();
+      })
       
 
+      $('.tweet-stream').on('click', 'a', function () {
+        var $body = $('.tweet-stream');
+        var user = $(this).closest('a').text();
+        console.log(user)
 
+        var index = streams.users[user].length -1;
+        console.log(streams.users)
+        console.log(user);
+        $body.html('');
+        while (index >= 0){
+          var tweet = streams.users[user][index];
+          var $tweet = $("<div class='tweet'></div>");
+          var utc = Date.parse(tweet.created_at);
+          var date = getDate(new Date(tweet.created_at));          
+          $tweet.attr('id', tweet.user);
+          $tweet.html('@' + "<a  class='user'>" + tweet.user + '</a>' + ': ' + tweet.message + date);
+          $tweet.appendTo($body);
+          index -= 1;
+        }
+        
+        
+        //$('.tweet').not('#' + user).hide();
+       
+       console.log(user);
+       
       });
-    </script>
+
+
+      $(function () {
+        updateHrTweets();
+        setInterval(updateHrTweets, 100000);
+        //setInterval(updateTweets, 2000);
+      });      
+    });
+  </script>
+</body>
 </html>
