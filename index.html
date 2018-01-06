@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <script src="jquery.js"></script>
   <script src="data_generator.js"></script>
-  <script src="application.js"></script>
+  <script src="moment.js"></script>
   <link rel="stylesheet" type="text/css" href="stylesheet.css">
 </head>
 
@@ -54,7 +54,8 @@
           var utc = Date.parse(tweet.created_at);
           var date = getDate(new Date(tweet.created_at));          
           $tweet.attr('id', tweet.user);
-          $tweet.html('@' + "<a  class='user'>" + tweet.user + '</a>' + ': ' + tweet.message + date);
+          $tweet.html('@' + "<a  class='user'>" + tweet.user + '</a>' + ': ' + tweet.message + ' ' + moment(tweet.created_at).fromNow());
+          //date);
           $tweet.appendTo($body);
           index -= 1;
         }
@@ -94,7 +95,7 @@
           var utc = Date.parse(tweet.created_at);
           var date = getDate(new Date(tweet.created_at));          
           $tweet.attr('id', tweet.user);
-          $tweet.html('@' + "<a  class='user'>" + tweet.user + '</a>' + ': ' + tweet.message + date);
+          $tweet.html('@' + "<a  class='user'>" + tweet.user + '</a>' + ': ' + tweet.message + ' ' + moment(tweet.created_at).fromNow());
           $tweet.appendTo($body);
           index -= 1;
         }
