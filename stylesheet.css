@@ -6,6 +6,18 @@ body {
 .nav-container{
     margin-top:15px;
 }
+.new-tweets{
+    width: 50%;
+    margin: auto;
+    /* background-color: white; */
+    opacity: 50%;
+}
+#write-tweet{
+    width: 50%;
+    margin: auto;
+
+    opacity: 50%;
+}
 .nav{
     width: 50%;
     margin: auto;
@@ -15,19 +27,24 @@ body {
 .nav a{  
     margin: 0px 50px 0px 50px;
 }
-.container{
+.tweet-stream{
     width: 50%;
-    margin: auto;
+    margin:auto;
 }
-.tweet-message{
-    padding:0px 0;
-    margin-top:25px;
-   
-    width: 25pc;
-}
+
 
 .tweet {
     opacity: 75%;
-    background-color: white;
-    width: 25pc;
+    background-color: rgb(159, 165, 218);
+    margin: 5px 5px 5px 5px;
+    size: 110%;
+   
+}
+.hidden{
+    display: none;
+}
+.user {
+    font-weight: bold;
+    font-style: oblique;
+    cursor: pointer
 }
