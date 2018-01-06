@@ -16,7 +16,7 @@
   <div class='nav'>
     <ul>
       <a id="home">Home</a>
-      <a>New Tweet</a>
+      <a id="get-tweets">Refresh Tweets</a>
     </ul>
   </div>
   <div id='write-tweet'>
@@ -59,9 +59,11 @@
           index -= 1;
         }
       };
-      $("#home").on('click', function(){
+      $(".nav").on('click', 'a', function(){
+        
         updateHrTweets();
-      });
+      }),
+      $("#get-tweets")
       function sendTweetAsGuest(){
         var tweet = {};
         tweet.user = window.visitor;
