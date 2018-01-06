@@ -19,19 +19,21 @@
       <a>New Tweet</a>
     </ul>
   </div>
+  <div id='new-tweet'>
+      <h1>What's happening?</h1>
+      <input class='tweet-message' type="text" />
+      <button id="send-message">Tweet</button>
+    </div>
   <div class='new-tweets'>
-    <button></button>
+    
   </div>
   <div class="tweet-stream"></div>
   <script>
+    window.visitor = 'trevor';
     $(document).ready(function () {
-    
 
-      function getDate(date) {
-        var d = new Date(date);
-
-
-        var month = d.getMonth() + 1;
+        function getDate(date) {
+        var d = new Date(date);var month = d.getMonth() + 1;
         var day = d.getDate();
         var time = d.getHours() + ':' + (d.getMinutes() < 10 ? '0' + d.getMinutes() : d.getMinutes()) + ':' + (d.getSeconds() < 10 ? '0' + d.getSeconds() : d.getSeconds());
 
@@ -59,17 +61,30 @@
       };
       $("#home").on('click', function(){
         updateHrTweets();
-      })
-      
+      });
+      function sendTweetAsGuest(){
+        var tweet = {};
+        tweet.user = window.visitor;
+        var message = 
+        tweet.message = $('.tweet-message').val();
+        tweet.created_at =getDate(new Date());
+        streams.users[window.visitor] = [];
+       
+          addTweet(tweet);
+      }
+      $("#send-message").on('click', function(){
+       
+        sendTweetAsGuest();
+        $('.tweet-message').val('');
+        updateHrTweets();
+       
+      });
 
       $('.tweet-stream').on('click', 'a', function () {
         var $body = $('.tweet-stream');
         var user = $(this).closest('a').text();
-        console.log(user)
-
         var index = streams.users[user].length -1;
-        console.log(streams.users)
-        console.log(user);
+        
         $body.html('');
         while (index >= 0){
           var tweet = streams.users[user][index];
@@ -81,19 +96,11 @@
           $tweet.appendTo($body);
           index -= 1;
         }
-        
-        
-        //$('.tweet').not('#' + user).hide();
-       
-       console.log(user);
-       
       });
-
-
+      
       $(function () {
         updateHrTweets();
-        setInterval(updateHrTweets, 300000);
-        //setInterval(updateTweets, 2000);
+        setInterval(updateHrTweets, 300000);        
       });      
     });
   </script>
