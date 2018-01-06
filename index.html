@@ -10,32 +10,26 @@
 </head>
 
 <body>
-  <!-- <div>
-      <button id="new-tweet">See Tweets</button>
-    </div> -->
-  <div class='nav'>
-    <ul>
-      <a id="home">Home</a>
-      <a id="get-tweets">Refresh Tweets</a>
-    </ul>
-  </div>
   <div id='write-tweet'>
-      <h1>What's happening?</h1>
-      <input class='tweet-message' type="text" />
-      <button id="send-message">Tweet</button>
-    </div>
+    <h1>what's happening?</h1>
+    <input class='tweet-message' type="text" />
+    <button id="send-message">tweet</button>
+    <h1 id="current-view" data-user=''>your feed</h1>
+    <a id="get-tweets">see your new tweets</a>
+  </div>
   <div class='new-tweets'>
-    
   </div>
   <div class="tweet-stream"></div>
   <script>
     window.visitor = 'trevor';
     $(document).ready(function () {
 
-        function getDate(date) {
-        var d = new Date(date);var month = d.getMonth() + 1;
+      function getDate(date) {
+        var d = new Date(date);
+        var month = d.getMonth() + 1;
         var day = d.getDate();
-        var time = d.getHours() + ':' + (d.getMinutes() < 10 ? '0' + d.getMinutes() : d.getMinutes()) + ':' + (d.getSeconds() < 10 ? '0' + d.getSeconds() : d.getSeconds());
+        var time = d.getHours() + ':' + (d.getMinutes() < 10 ? '0' + d.getMinutes() : d.getMinutes()) + ':' + (d.getSeconds() <
+          10 ? '0' + d.getSeconds() : d.getSeconds());
 
         var output = ' ' + d.getFullYear() + '/' +
           (month < 10 ? '0' : '') + month + '/' +
@@ -47,65 +41,65 @@
         var $body = $('.tweet-stream');
         $body.html('');
         var index = streams.home.length - 1;
-        
+        $('#current-view').text('your feed')
         while (index >= 0) {
           var tweet = streams.home[index];
           var $tweet = $("<div class='tweet'></div>");
           var utc = Date.parse(tweet.created_at);
-          var date = getDate(new Date(tweet.created_at));          
+          var date = getDate(new Date(tweet.created_at));
           $tweet.attr('id', tweet.user);
-          $tweet.html('@' + "<a  class='user'>" + tweet.user + '</a>' + ': ' + tweet.message + ' ' + moment(tweet.created_at).fromNow());
-          //date);
+          $tweet.html('@' + "<a  class='user'>" + tweet.user + '</a>' + ': ' + tweet.message +
+            "<sm style='margin-top:5px'><br> sent " + moment(tweet.created_at).fromNow() + '</sm>');
+          //date); 
           $tweet.appendTo($body);
           index -= 1;
         }
       };
-      $(".nav").on('click', 'a', function(){
-        
-        updateHrTweets();
-      }),
-      $("#get-tweets")
-      function sendTweetAsGuest(){
-        var tweet = {};
-        tweet.user = window.visitor;
-        var message = 
-        tweet.message = $('.tweet-message').val();
-        tweet.created_at =getDate(new Date());
-        streams.users[window.visitor] = [];
-       
-          addTweet(tweet);
-      }
-      $("#send-message").on('click', function(){
-       
-        sendTweetAsGuest();
-        $('.tweet-message').val('');
-        updateHrTweets();
-       
-      });
 
       $('.tweet-stream').on('click', 'a', function () {
         var $body = $('.tweet-stream');
         var user = $(this).closest('a').text();
-        var index = streams.users[user].length -1;
-        
+        var index = streams.users[user].length - 1;
+        $('#current-view').text(user + '\'s feed');
         $body.html('');
-        while (index >= 0){
+        while (index >= 0) {
           var tweet = streams.users[user][index];
           var $tweet = $("<div class='tweet'></div>");
           var utc = Date.parse(tweet.created_at);
-          var date = getDate(new Date(tweet.created_at));          
+          var date = getDate(new Date(tweet.created_at));
           $tweet.attr('id', tweet.user);
-          $tweet.html('@' + "<a  class='user'>" + tweet.user + '</a>' + ': ' + tweet.message + ' ' + moment(tweet.created_at).fromNow());
+          $tweet.html('@' + "<a  class='user'>" + tweet.user + '</a>' + ': ' + tweet.message +
+            "<sm style='margin-top:5px'><br> sent " + moment(tweet.created_at).fromNow() + '</sm>');
           $tweet.appendTo($body);
           index -= 1;
         }
       });
-      
+
+      $("#write-tweet").on('click', 'a', function () {
+        updateHrTweets();
+      });
+
+      function sendTweetAsGuest() {
+        var tweet = {};
+        tweet.user = window.visitor;
+        var message =
+          tweet.message = $('.tweet-message').val();
+        tweet.created_at = getDate(new Date());
+        streams.users[window.visitor] = [];
+
+        addTweet(tweet);
+      }
+      $("#send-message").on('click', function () {
+        sendTweetAsGuest();
+        $('.tweet-message').val('');
+        updateHrTweets();
+      });
       $(function () {
         updateHrTweets();
-        setInterval(updateHrTweets, 300000);        
-      });      
+        setInterval(updateHrTweets, 300000);
+      });
     });
   </script>
 </body>
+
 </html>
